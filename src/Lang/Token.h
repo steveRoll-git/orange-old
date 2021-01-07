@@ -12,7 +12,8 @@ namespace Orange::Lang
         Number,
         String,
         LParen,
-        RParen
+        RParen,
+        Quote
     };
 
     struct Token
