@@ -13,7 +13,9 @@ namespace Orange::Lang
 
         protected:
         std::istream& codeStream;
+        std::string sourceName;
         char currentChar;
+        int currentLine;
         bool reachedEnd;
 
         void advanceChar();
