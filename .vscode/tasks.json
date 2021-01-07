@@ -5,7 +5,7 @@
             "type": "shell",
             "label": "C/C++: g++.exe build project",
             "command": "g++",
-            "args": ["-g", "${workspaceFolder}\\src\\*.cpp", "-o", "${workspaceFolder}\\bin\\Orange.exe"],
+            "args": ["${workspaceFolder}\\src\\*.cpp", "-o", "${workspaceFolder}\\bin\\Orange.exe"],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
