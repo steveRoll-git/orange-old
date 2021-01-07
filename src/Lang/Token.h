@@ -25,6 +25,7 @@ namespace Orange::Lang
             double number;
         } value;
         
+        ~Token();
     };
 } // namespace Orange
 
