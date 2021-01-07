@@ -14,7 +14,7 @@ namespace Orange
 
 	typedef double NumberType;
 
-	struct List;
+	struct ConsCell;
 
 	struct Value
 	{
@@ -25,11 +25,11 @@ namespace Orange
 			NumberType number;
 			char* string;
 			char* symbol;
-			List* list;
+			ConsCell* cons;
 		};
 	};
 
-	struct List
+	struct ConsCell
 	{
 		Value car;
 		Value cdr;
