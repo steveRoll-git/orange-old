@@ -24,7 +24,11 @@ namespace Orange::Lang
         {
             std::string string;
             double number;
-        } value;
+        };
+
+        Token(TokenType _type) : type(_type) {};
+        Token(TokenType _type, std::string _string) : type(_type), string(_string) {};
+        Token(TokenType _type, double _number) : type(_type), number(_number) {};
         
         ~Token();
     };

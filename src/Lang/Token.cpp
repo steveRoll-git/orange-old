@@ -6,6 +6,6 @@ Token::~Token()
 {
     if (type == TokenType::Identifier || type == TokenType::String)
     {
-        ~value.string();
+        string.~basic_string();
     }
 }

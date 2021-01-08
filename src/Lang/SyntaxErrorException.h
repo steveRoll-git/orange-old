@@ -24,9 +24,9 @@ namespace Orange::Lang
             return sourceName + ":" + std::to_string(line) + ": " + message;
         }
         
-        const char* what() override
+        const char* what() const throw ()
         {
-            return getFormattedError().c_str();
+            return "syntax error";
         }
     };
     
