@@ -28,7 +28,10 @@ namespace Orange::Lang
 
         Token(TokenType _type) : type(_type) {};
         Token(TokenType _type, std::string _string) : type(_type), string(_string) {};
-        Token(TokenType _type, double _number) : type(_type), number(_number) {};
+        Token(double _number) : type(TokenType::Number), number(_number) {};
+
+        const char* getTypeName();
+        std::string toString();
         
         ~Token();
     };
