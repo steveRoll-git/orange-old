@@ -3,13 +3,17 @@
 
 #include <istream>
 
+#include "Token.h"
+
 namespace Orange::Lang
 {
     class Lexer
     {
         public:
-        Lexer(std::istream& _codeStream);
+        Lexer(std::istream& _codeStream, std::string& _sourceName);
         virtual ~Lexer();
+        bool hasReachedEnd();
+        Token nextToken();
 
         protected:
         std::istream& codeStream;
@@ -19,6 +23,8 @@ namespace Orange::Lang
         bool reachedEnd;
 
         void advanceChar();
+        std::string parseName(bool allowSpace = false);
+        double parseNumber();
     };
 } // namespace Orange::Lang
 
