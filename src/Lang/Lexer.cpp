@@ -128,7 +128,7 @@ double Lexer::parseNumber()
 {
     std::string contents;
 
-    while (isalnum(currentChar) || currentChar == '.')
+    while (!reachedEnd && (isalnum(currentChar) || currentChar == '.'))
     {
         contents.push_back(currentChar);
         advanceChar();
