@@ -1,5 +1,5 @@
 bin/
 obj/
 *.suo
-/.vs/Orange/v16
+/.vs/
 /Debug
