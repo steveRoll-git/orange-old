@@ -24,14 +24,14 @@ namespace Orange
 		{
 			NumberType number;
 			char* string;
-			char* symbol;
+			//char* symbol;
 			ConsCell* cons;
 		};
 
 		Value(ValueType _type) : type(_type) {};
 		Value(ValueType _type, NumberType _number) : type(_type), number(_number) {};
 		Value(ValueType _type, char* _string) : type(_type), string(_string) {};
-		Value(ValueType _type, char* _symbol) : type(_type), symbol(_symbol) {};
+		//Value(ValueType _type, char* _symbol) : type(_type), symbol(_symbol) {};
 		Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
 	};
 
