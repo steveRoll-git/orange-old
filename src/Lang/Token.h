@@ -46,6 +46,11 @@ namespace Orange::Lang
             }
         }
 
+        explicit operator bool() const
+        {
+            return type != TokenType::Invalid;
+        }
+
         const char* getTypeName();
         std::string toString();
         
