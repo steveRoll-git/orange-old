@@ -28,6 +28,7 @@ namespace Orange
 			ConsCell* cons;
 		};
 
+		Value() : type(ValueType::Nil) {};
 		Value(ValueType _type) : type(_type) {};
 		Value(ValueType _type, NumberType _number) : type(_type), number(_number) {};
 		Value(ValueType _type, char* _string) : type(_type), string(_string) {};
