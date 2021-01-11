@@ -1,6 +1,8 @@
 #ifndef VALUE_H
 #define VALUE_H
 
+#include <string>
+
 namespace Orange
 {
 	enum class ValueType
@@ -34,12 +36,21 @@ namespace Orange
 		Value(ValueType _type, char* _string) : type(_type), string(_string) {};
 		//Value(ValueType _type, char* _symbol) : type(_type), symbol(_symbol) {};
 		Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
+
+		const char* getTypeName();
+		std::string toString(bool hideListParens = false);
 	};
 
 	struct ConsCell
 	{
 		Value car;
 		Value cdr;
+
+		std::string toString();
+		bool isEmpty()
+		{
+			return car.type == ValueType::Nil && cdr.type == ValueType::Nil;
+		}
 	};
 }
 
