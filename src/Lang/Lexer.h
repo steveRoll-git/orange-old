@@ -22,6 +22,7 @@ namespace Orange::Lang
         int currentLine;
         bool reachedEnd;
 
+        private:
         void advanceChar();
         std::string parseName(bool allowSpace = false);
         double parseNumber();
