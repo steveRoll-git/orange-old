@@ -77,6 +77,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -100,12 +101,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="src\lang\Lexer.cpp" />
     <ClCompile Include="src\lang\Token.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Value.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="src\lang\Lexer.h" />
     <ClInclude Include="src\lang\SyntaxErrorException.h" />
     <ClInclude Include="src\lang\Token.h" />
