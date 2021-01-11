@@ -59,6 +59,13 @@ ConsCell* Parser::parseList()
 
 	while (curToken.type != TokenType::RParen)
 	{
+		if (last != nullptr && curToken.type == TokenType::Identifier && curToken.string == ".")
+		{
+			nextToken();
+			last->cdr = parseValue();
+			break;
+		}
+
 		ConsCell* newList = new ConsCell();
 
 		newList->car = parseValue();
@@ -75,7 +82,7 @@ ConsCell* Parser::parseList()
 		}
 	}
 
-	nextToken();
+	expect(Token(TokenType::RParen));
 
 	return (first == nullptr ? new ConsCell() : first);
 }
