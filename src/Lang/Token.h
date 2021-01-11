@@ -32,8 +32,8 @@ namespace Orange::Lang
 
         Token() : type(TokenType::Invalid) {};
         Token(TokenType _type) : type(_type) {};
-        Token(TokenType _type, std::string _string) : type(_type), string(_string) {};
-        Token(double _number) : type(TokenType::Number), number(_number) {};
+        Token(TokenType _type, std::string _string) : type(_type), string(_string), valueSet(true) {};
+        Token(double _number) : type(TokenType::Number), number(_number), valueSet(true) {};
 
         Token(Token& other)
         {
