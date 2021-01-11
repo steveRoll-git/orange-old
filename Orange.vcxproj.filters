@@ -33,6 +33,9 @@
     <ClCompile Include="src\lang\Token.cpp">
       <Filter>Source Files\Lang</Filter>
     </ClCompile>
+    <ClCompile Include="src\Parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Value.h">
@@ -46,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="src\lang\SyntaxErrorException.h">
       <Filter>Header Files\Lang</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Parser.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
