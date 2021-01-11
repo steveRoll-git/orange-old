@@ -51,6 +51,11 @@ namespace Orange::Lang
             return type != TokenType::Invalid;
         }
 
+        bool compareTo(Token& other)
+        {
+            return type == other.type;
+        }
+
         const char* getTypeName();
         std::string toString();
         
