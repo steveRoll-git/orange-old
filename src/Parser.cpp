@@ -46,6 +46,11 @@ Value Parser::parseValue()
 		nextToken();
 		return Value(ValueType::Number, num);
 	}
+	else if (curToken.type == TokenType::Identifier && curToken.string == "nil")
+	{
+		nextToken();
+		return Value();
+	}
 
 	throw SyntaxErrorException(sourceName, currentLine, "Did not expect " + curToken.toString() + " here");
 }
