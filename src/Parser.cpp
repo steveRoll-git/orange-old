@@ -38,7 +38,10 @@ Value Parser::parseValue()
 {
 	if (curToken.type == TokenType::LParen)
 	{
-		return Value(ValueType::List, parseList());
+		nextToken();
+		ConsCell* theList = parseList();
+		expect(Token(TokenType::RParen));
+		return Value(ValueType::List, theList);
 	}
 	else if (curToken.type == TokenType::Number)
 	{
@@ -57,8 +60,6 @@ Value Parser::parseValue()
 
 ConsCell* Parser::parseList()
 {
-	expect(Token(TokenType::LParen));
-
 	ConsCell* first = nullptr;
 	ConsCell* last = nullptr;
 
@@ -86,8 +87,6 @@ ConsCell* Parser::parseList()
 			last = newList;
 		}
 	}
-
-	expect(Token(TokenType::RParen));
 
 	return (first == nullptr ? new ConsCell() : first);
 }
