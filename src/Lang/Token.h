@@ -28,34 +28,48 @@ namespace Orange::Lang
             double number;
         };
 
+        bool valueSet = false;
+
         Token() : type(TokenType::Invalid) {};
         Token(TokenType _type) : type(_type) {};
         Token(TokenType _type, std::string _string) : type(_type), string(_string) {};
         Token(double _number) : type(TokenType::Number), number(_number) {};
 
-        Token(const Token& other)
+        Token(Token& other)
         {
             type = other.type;
-            if (other.type == TokenType::Identifier || other.type == TokenType::String)
+            if ((other.type == TokenType::Identifier || other.type == TokenType::String) && other.valueSet)
             {
-                string = other.string;
+                setValue(other.string);
             }
-            else if (other.type == TokenType::Number)
+            else if (other.type == TokenType::Number && other.valueSet)
             {
-                number = other.number;
+                setValue(other.number);
             }
         }
 
-        void operator =(const Token& other)
+        void setValue(std::string& _string)
+        {
+            new(&string) std::string;
+            string = _string;
+            valueSet = true;
+        }
+        void setValue(double _number)
+        {
+            number = _number;
+            valueSet = true;
+        }
+
+        void operator =(Token& other)
         {
             type = other.type;
-            if (other.type == TokenType::Identifier || other.type == TokenType::String)
+            if ((other.type == TokenType::Identifier || other.type == TokenType::String) && other.valueSet)
             {
-                string = other.string;
+                setValue(other.string);
             }
-            else if (other.type == TokenType::Number)
+            else if (other.type == TokenType::Number && other.valueSet)
             {
-                number = other.number;
+                setValue(other.number);
             }
         }
 

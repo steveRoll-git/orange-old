@@ -28,7 +28,7 @@ const char* Token::getTypeName()
 std::string Token::toString()
 {
     std::string result(getTypeName());
-    if (type == TokenType::Identifier || type == TokenType::String)
+    if ((type == TokenType::Identifier || type == TokenType::String) && valueSet)
     {
         result.append(" \"");
         result.append(string);
@@ -44,8 +44,8 @@ std::string Token::toString()
 
 Token::~Token()
 {
-    if (type == TokenType::Identifier || type == TokenType::String)
+    if ((type == TokenType::Identifier || type == TokenType::String) && valueSet)
     {
-        string.~basic_string();
+        string.~string();
     }
 }
