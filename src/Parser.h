@@ -19,5 +19,7 @@ namespace Orange
 		Token accept(Token t);
 		void expect(Token t);
 
+		Value parseValue();
+		ConsCell* parseList();
 	};
 }

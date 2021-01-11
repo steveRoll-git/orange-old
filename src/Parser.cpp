@@ -33,3 +33,49 @@ void Parser::expect(Token t)
 		throw SyntaxErrorException(sourceName, currentLine, "Expected " + t.toString() + ", got " + curToken.toString());
 	}
 }
+
+Value Parser::parseValue()
+{
+	if (curToken.type == TokenType::LParen)
+	{
+		return Value(ValueType::List, parseList());
+	}
+	else if (curToken.type == TokenType::Number)
+	{
+		double num = curToken.number;
+		nextToken();
+		return Value(ValueType::Number, num);
+	}
+
+	throw SyntaxErrorException(sourceName, currentLine, "Did not expect " + curToken.toString() + " here");
+}
+
+ConsCell* Parser::parseList()
+{
+	expect(Token(TokenType::LParen));
+
+	ConsCell* first = nullptr;
+	ConsCell* last = nullptr;
+
+	while (curToken.type != TokenType::RParen)
+	{
+		ConsCell* newList = new ConsCell();
+
+		newList->car = parseValue();
+
+		if (first == nullptr)
+		{
+			first = newList;
+			last = newList;
+		}
+		else
+		{
+			last->cdr = Value(ValueType::List, newList);
+			last = newList;
+		}
+	}
+
+	nextToken();
+
+	return (first == nullptr ? new ConsCell() : first);
+}
