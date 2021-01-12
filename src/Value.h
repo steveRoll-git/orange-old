@@ -11,7 +11,8 @@ namespace Orange
 		Number,
 		String,
 		Symbol,
-		List
+		List,
+		Function
 	};
 
 	typedef double NumberType;
