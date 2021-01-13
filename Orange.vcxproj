@@ -106,6 +106,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Parser.cpp" />
     <ClCompile Include="src\Value.cpp" />
+    <ClCompile Include="src\VM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lang\Lexer.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="src\lang\Token.h" />
     <ClInclude Include="src\Parser.h" />
     <ClInclude Include="src\Value.h" />
+    <ClInclude Include="src\VM.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

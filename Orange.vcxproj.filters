@@ -36,6 +36,9 @@
     <ClCompile Include="src\Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\VM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Value.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files\Lang</Filter>
     </ClInclude>
     <ClInclude Include="src\Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
