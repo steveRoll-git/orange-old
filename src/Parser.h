@@ -13,13 +13,12 @@ namespace Orange
 	public:
 		Parser(std::istream& _codeStream, std::string& _sourceName);
 
+		Value parseValue();
+		ConsCell* parseList();
 	private:
 		Token curToken;
 		void nextToken();
 		Token accept(Token t);
 		void expect(Token t);
-
-		Value parseValue();
-		ConsCell* parseList();
 	};
 }
