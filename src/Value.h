@@ -12,8 +12,13 @@ namespace Orange
 		String,
 		Symbol,
 		List,
-		Function
+		Function,
+		InternalFunction,
 	};
+
+	struct Value;
+
+	typedef Value(*InternalFunction)(Value&);
 
 	typedef double NumberType;
 
@@ -28,6 +33,7 @@ namespace Orange
 			NumberType number;
 			std::string string;
 			ConsCell* cons;
+			InternalFunction internalFunc;
 		};
 
 		bool valueSet = false;
@@ -49,6 +55,7 @@ namespace Orange
 			setValue(_string);
 		}
 		Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
+		Value(ValueType _type, InternalFunction _func) : type(_type), internalFunc(_func) {};
 
 		void copyOther(Value& other)
 		{
@@ -65,7 +72,10 @@ namespace Orange
 			{
 				cons = other.cons;
 			}
-
+			else if (other.type == ValueType::InternalFunction)
+			{
+				internalFunc = other.internalFunc;
+			}
 		}
 
 		Value(Value& other)
