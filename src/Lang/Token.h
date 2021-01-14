@@ -35,7 +35,7 @@ namespace Orange::Lang
         Token(TokenType _type, std::string _string) : type(_type), string(_string), valueSet(true) {};
         Token(double _number) : type(TokenType::Number), number(_number), valueSet(true) {};
 
-        Token(Token& other)
+        void copyOther(Token& other)
         {
             type = other.type;
             if ((other.type == TokenType::Identifier || other.type == TokenType::String) && other.valueSet)
@@ -46,6 +46,11 @@ namespace Orange::Lang
             {
                 setValue(other.number);
             }
+        }
+
+        Token(Token& other)
+        {
+            copyOther(other);
         }
 
         void setValue(std::string& _string)
@@ -62,15 +67,7 @@ namespace Orange::Lang
 
         void operator =(Token& other)
         {
-            type = other.type;
-            if ((other.type == TokenType::Identifier || other.type == TokenType::String) && other.valueSet)
-            {
-                setValue(other.string);
-            }
-            else if (other.type == TokenType::Number && other.valueSet)
-            {
-                setValue(other.number);
-            }
+            copyOther(other);
         }
 
         explicit operator bool() const
