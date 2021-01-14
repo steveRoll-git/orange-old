@@ -18,7 +18,9 @@ namespace Orange
 
 	struct Value;
 
-	typedef Value(*InternalFunction)(Value&);
+	class VM;
+
+	typedef Value(*InternalFunction)(VM&, Value&);
 
 	typedef double NumberType;
 
