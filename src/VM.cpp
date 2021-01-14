@@ -2,6 +2,16 @@
 
 #include "RuntimeException.h"
 
+#include "builtinFunctions.h"
+
+VM::VM()
+{
+	for (auto& func : builtinFunctions)
+	{
+		bindings[func.first] = Value(ValueType::InternalFunction, func.second);
+	}
+}
+
 Value VM::evaluate(Value& v)
 {
 	if (v.type == ValueType::Nil || v.type == ValueType::Number || v.type == ValueType::String)
