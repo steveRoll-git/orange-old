@@ -59,5 +59,17 @@
     <ClInclude Include="src\VM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RuntimeException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\builtinFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\repl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\builtinMathFunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

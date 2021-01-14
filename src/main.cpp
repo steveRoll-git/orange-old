@@ -1,9 +1,12 @@
-#include <iostream>
+#include "repl.h"
 
 using namespace std;
 
+using namespace Orange;
+
 int main()
 {
-    cout << "Hello world!" << endl;
+    repl();
+
     return 0;
 }

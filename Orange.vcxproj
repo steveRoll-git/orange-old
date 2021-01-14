@@ -109,10 +109,14 @@
     <ClCompile Include="src\VM.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\builtinFunctions.h" />
+    <ClInclude Include="src\builtinMathFunc.h" />
     <ClInclude Include="src\lang\Lexer.h" />
     <ClInclude Include="src\lang\SyntaxErrorException.h" />
     <ClInclude Include="src\lang\Token.h" />
     <ClInclude Include="src\Parser.h" />
+    <ClInclude Include="src\repl.h" />
+    <ClInclude Include="src\RuntimeException.h" />
     <ClInclude Include="src\Value.h" />
     <ClInclude Include="src\VM.h" />
   </ItemGroup>
