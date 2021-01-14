@@ -49,10 +49,19 @@ Value Parser::parseValue()
 		nextToken();
 		return Value(ValueType::Number, num);
 	}
-	else if (curToken.type == TokenType::Identifier && curToken.string == "nil")
+	else if (curToken.type == TokenType::Identifier)
 	{
-		nextToken();
-		return Value();
+		if (curToken.string == "nil")
+		{
+			nextToken();
+			return Value();
+		}
+		else
+		{
+			std::string str = curToken.string;
+			nextToken();
+			return Value(ValueType::Symbol, str);
+		}
 	}
 
 	throw SyntaxErrorException(sourceName, currentLine, "Did not expect " + curToken.toString() + " here");
