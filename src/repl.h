@@ -10,6 +10,11 @@ using namespace std;
 using namespace Orange;
 using namespace Orange::Lang;
 
+bool isEmpty(string& str)
+{
+	return str.find_first_not_of(" \t\n\v\f\r") == std::string::npos;
+}
+
 void repl()
 {
 	VM vm;
@@ -22,6 +27,11 @@ void repl()
 
 			string inputLine;
 			getline(cin, inputLine);
+
+			if (inputLine.length() == 0 || isEmpty(inputLine))
+			{
+				continue;
+			}
 
 			//cout << "line: " << inputLine << endl;
 
