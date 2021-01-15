@@ -1,6 +1,15 @@
 #include "Value.h"
 
+#include <sstream>
+
 using namespace Orange;
+
+std::string to_hex_string(std::size_t i)
+{
+	std::stringstream s;
+	s << "0x" << std::hex << i;
+	return s.str();
+}
 
 const char* Value::getTypeName()
 {
@@ -16,6 +25,10 @@ const char* Value::getTypeName()
 		return "symbol";
 	case Orange::ValueType::List:
 		return "list";
+	case Orange::ValueType::Function:
+		return "function";
+	case Orange::ValueType::InternalFunction:
+		return "internal function";
 	default:
 		return "invalid";
 	}
@@ -57,7 +70,14 @@ std::string Value::toString(bool hideListParens)
 	}
 	else
 	{
-		return getTypeName();
+		std::string result = std::string("<") + getTypeName();
+		if (type == ValueType::InternalFunction)
+		{
+			result.push_back(' ');
+			result.append(to_hex_string((std::size_t)internalFunc));
+		}
+		result.push_back('>');
+		return result;
 	}
 }
 
