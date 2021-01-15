@@ -47,7 +47,7 @@ void repl()
 		}
 		catch (SyntaxErrorException& e)
 		{
-			cout << e.getFormattedError() << endl;
+			cout << "Syntax error: " << endl << e.getFormattedError() << endl;
 		}
 		catch (RuntimeException& e)
 		{
