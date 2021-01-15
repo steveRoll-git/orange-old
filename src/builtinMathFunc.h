@@ -1,7 +1,15 @@
+#define STRINGIFY(X) #X
+#define TOSTRING(x) STRINGIFY(x)
+
 Value MATH_FUNCNAME(VM& vm, Value& list)
 {
 	NumberType result;
 	Value* current = &list;
+
+	if (current->type == ValueType::Nil)
+	{
+		throw RuntimeException(std::string("Not enough arguments for " TOSTRING(MATH_OPERATOR)));
+	}
 
 	bool gotFirst = false;
 
