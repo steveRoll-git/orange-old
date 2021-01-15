@@ -36,31 +36,28 @@ void Parser::expect(Token t)
 
 Value Parser::parseValue()
 {
-	if (curToken.type == TokenType::LParen)
+	Token lastTok = curToken;
+	nextToken();
+
+	if (lastTok.type == TokenType::LParen)
 	{
-		nextToken();
 		ConsCell* theList = parseList();
 		expect(Token(TokenType::RParen));
 		return Value(ValueType::List, theList);
 	}
-	else if (curToken.type == TokenType::Number)
+	else if (lastTok.type == TokenType::Number)
 	{
-		double num = curToken.number;
-		nextToken();
-		return Value(ValueType::Number, num);
+		return Value(ValueType::Number, lastTok.number);
 	}
-	else if (curToken.type == TokenType::Identifier)
+	else if (lastTok.type == TokenType::Identifier)
 	{
-		if (curToken.string == "nil")
+		if (lastTok.string == "nil")
 		{
-			nextToken();
 			return Value();
 		}
 		else
 		{
-			std::string str = curToken.string;
-			nextToken();
-			return Value(ValueType::Symbol, str);
+			return Value(ValueType::Symbol, lastTok.string);
 		}
 	}
 
