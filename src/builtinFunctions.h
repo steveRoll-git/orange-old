@@ -3,6 +3,8 @@
 #include "VM.h"
 #include "RuntimeException.h"
 
+#include <iostream>
+
 namespace Orange
 {
 #define MATH_OPERATOR +
@@ -21,10 +23,31 @@ namespace Orange
 #define MATH_FUNCNAME math_div
 #include "builtinMathFunc.h"
 
+	Value builtin_print(VM& vm, Value& list)
+	{
+		Value* current = &list;
+
+		bool gotFirst = false;
+
+		while (current != nullptr && current->type == ValueType::List)
+		{
+			Value& val = vm.evaluate(current->cons->car);
+
+			std::cout << val.toString();
+
+			current = &current->cons->cdr;
+		}
+
+		std::cout << std::endl;
+
+		return Value();
+	}
+
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
 		std::make_pair(std::string("+"), math_add),
 		std::make_pair(std::string("-"), math_sub),
 		std::make_pair(std::string("*"), math_mul),
 		std::make_pair(std::string("/"), math_div),
+		std::make_pair(std::string("print"), builtin_print),
 	};
 }
