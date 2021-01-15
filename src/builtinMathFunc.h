@@ -19,7 +19,7 @@ Value MATH_FUNCNAME(VM& vm, Value& list)
 
 		if (num.type != ValueType::Number)
 		{
-			throw RuntimeException(std::string("cannot perform arithmetic on ") + num.getTypeName() + " value");
+			throw RuntimeException(std::string(TOSTRING(MATH_OPERATOR) " cannot perform arithmetic on ") + num.getTypeName() + " value");
 		}
 
 		if (gotFirst)
