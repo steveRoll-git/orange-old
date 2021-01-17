@@ -10,6 +10,7 @@ namespace Orange
 		Nil,
 		Number,
 		String,
+		Boolean,
 		Symbol,
 		List,
 		Function,
@@ -34,6 +35,7 @@ namespace Orange
 		{
 			NumberType number;
 			std::string string;
+			bool boolean;
 			ConsCell* cons;
 			InternalFunction internalFunc;
 		};
@@ -56,6 +58,7 @@ namespace Orange
 		{
 			setValue(_string);
 		}
+		Value(ValueType _type, bool _boolean) : type(_type), boolean(_boolean) {};
 		Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
 		Value(ValueType _type, InternalFunction _func) : type(_type), internalFunc(_func) {};
 
@@ -69,6 +72,10 @@ namespace Orange
 			else if (other.type == ValueType::Number)
 			{
 				number = other.number;
+			}
+			else if (other.type == ValueType::Boolean)
+			{
+				boolean = other.boolean;
 			}
 			else if (other.type == ValueType::List)
 			{

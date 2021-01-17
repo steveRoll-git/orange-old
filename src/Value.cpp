@@ -21,6 +21,8 @@ const char* Value::getTypeName()
 		return "number";
 	case Orange::ValueType::String:
 		return "string";
+	case Orange::ValueType::Boolean:
+		return "boolean";
 	case Orange::ValueType::Symbol:
 		return "symbol";
 	case Orange::ValueType::List:
@@ -49,6 +51,10 @@ std::string Value::toString(bool hideListParens)
 			result.pop_back();
 		}
 		return result;
+	}
+	else if (type == ValueType::Boolean)
+	{
+		return boolean ? "true" : "false";
 	}
 	else if (type == ValueType::List)
 	{

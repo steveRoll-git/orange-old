@@ -14,7 +14,7 @@ VM::VM()
 
 Value VM::evaluate(Value& v)
 {
-	if (v.type == ValueType::Nil || v.type == ValueType::Number || v.type == ValueType::String)
+	if (v.type == ValueType::Nil || v.type == ValueType::Number || v.type == ValueType::String || v.type == ValueType::Boolean)
 	{
 		//self-evaluating
 		return v;

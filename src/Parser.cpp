@@ -55,6 +55,14 @@ Value Parser::parseValue()
 		{
 			return Value();
 		}
+		else if (lastTok.string == "true")
+		{
+			return Value(ValueType::Boolean, true);
+		}
+		else if (lastTok.string == "false")
+		{
+			return Value(ValueType::Boolean, false);
+		}
 		else
 		{
 			return Value(ValueType::Symbol, lastTok.string);
