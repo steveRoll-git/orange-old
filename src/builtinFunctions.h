@@ -4,6 +4,7 @@
 #include "RuntimeException.h"
 
 #include <iostream>
+#include <sstream>
 
 namespace Orange
 {
@@ -27,18 +28,18 @@ namespace Orange
 	{
 		Value* current = &list;
 
-		bool gotFirst = false;
+		std::stringstream output;
 
 		while (current != nullptr && current->type == ValueType::List)
 		{
 			Value& val = vm.evaluate(current->cons->car);
 
-			std::cout << val.toString();
+			output << val.toString();
 
 			current = &current->cons->cdr;
 		}
 
-		std::cout << std::endl;
+		std::cout << output.str() << std::endl;
 
 		return Value();
 	}
