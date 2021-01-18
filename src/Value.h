@@ -108,6 +108,11 @@ namespace Orange
 			valueSet = true;
 		}
 
+		bool isTruthy()
+		{
+			return !(type == ValueType::Nil || (type == ValueType::Boolean && boolean == false));
+		}
+
 		~Value()
 		{
 			if ((type == ValueType::Symbol || type == ValueType::String) && valueSet)
