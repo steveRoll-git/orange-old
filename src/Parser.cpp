@@ -70,7 +70,7 @@ Value Parser::parseValue()
 	}
 	else if (lastTok.type == TokenType::String)
 	{
-		return Value(ValueType::String, curToken.string);
+		return Value(ValueType::String, lastTok.string);
 	}
 
 	throw SyntaxErrorException(sourceName, currentLine, "Did not expect " + curToken.toString() + " here");
