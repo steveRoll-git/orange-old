@@ -135,6 +135,11 @@ namespace Orange
 		{
 			return car.type == ValueType::Nil && cdr.type == ValueType::Nil;
 		}
+
+		int getLength()
+		{
+			return 1 + (cdr.type == ValueType::List ? cdr.cons->getLength() : 0);
+		}
 	};
 }
 
