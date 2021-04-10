@@ -72,6 +72,11 @@ Value Parser::parseValue()
 	{
 		return Value(ValueType::String, lastTok.string);
 	}
+	else if (lastTok.type == TokenType::Quote)
+	{
+		//just returns (quote <value after the quote>)
+		return Value(ValueType::List, new ConsCell(Value(ValueType::Symbol, std::string("quote")), Value(ValueType::List, new ConsCell(parseValue(), Value()))));
+	}
 
 	throw SyntaxErrorException(sourceName, currentLine, "Did not expect " + curToken.toString() + " here");
 }
