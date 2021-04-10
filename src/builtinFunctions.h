@@ -63,6 +63,16 @@ namespace Orange
 		}
 	}
 
+	Value builtin_quote(VM&, Value& args)
+	{
+		if (!(args.type == ValueType::List && args.cons->getLength() == 1))
+		{
+			throw RuntimeException(std::string("'quote' expected 1 parameter"));
+		}
+
+		return args.cons->car;
+	}
+
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
 		std::make_pair(std::string("+"), math_add),
 		std::make_pair(std::string("-"), math_sub),
@@ -70,5 +80,6 @@ namespace Orange
 		std::make_pair(std::string("/"), math_div),
 		std::make_pair(std::string("print"), builtin_print),
 		std::make_pair(std::string("if"), builtin_if),
+		std::make_pair(std::string("quote"), builtin_quote),
 	};
 }
