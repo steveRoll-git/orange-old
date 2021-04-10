@@ -130,6 +130,9 @@ namespace Orange
 		Value car;
 		Value cdr;
 
+		ConsCell() {}
+		ConsCell(Value& car, Value& cdr) : car(car), cdr(cdr) {}
+
 		std::string toString();
 		bool isEmpty()
 		{
