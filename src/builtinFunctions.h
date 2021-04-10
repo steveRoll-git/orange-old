@@ -44,11 +44,31 @@ namespace Orange
 		return Value();
 	}
 
+	Value builtin_if(VM& vm, Value& args)
+	{
+		if (!(args.type == ValueType::List && args.cons->getLength() == 3))
+		{
+			throw RuntimeException(std::string("'if' expected 3 parameters"));
+		}
+
+		Value& condition = args.cons->car;
+
+		if (vm.evaluate(condition).isTruthy())
+		{
+			return vm.evaluate(args.cons->cdr.cons->car);
+		}
+		else
+		{
+			return vm.evaluate(args.cons->cdr.cons->cdr.cons->car);
+		}
+	}
+
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
 		std::make_pair(std::string("+"), math_add),
 		std::make_pair(std::string("-"), math_sub),
 		std::make_pair(std::string("*"), math_mul),
 		std::make_pair(std::string("/"), math_div),
 		std::make_pair(std::string("print"), builtin_print),
+		std::make_pair(std::string("if"), builtin_if),
 	};
 }
