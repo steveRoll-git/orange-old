@@ -6,7 +6,7 @@ Value MATH_FUNCNAME(VM& vm, Value& list)
 	NumberType result;
 	Value* current = &list;
 
-	if (current->type == ValueType::Nil)
+	if (current->type != ValueType::List)
 	{
 		throw RuntimeException(std::string("Not enough arguments for " TOSTRING(MATH_OPERATOR)));
 	}
