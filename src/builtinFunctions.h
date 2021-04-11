@@ -24,6 +24,14 @@ namespace Orange
 #define MATH_FUNCNAME math_div
 #include "builtinMathFunc.h"
 
+	void expectArgs(Value& args, int count, const char* funcName)
+	{
+		if (!(args.type == ValueType::List && args.cons->getLength() == count))
+		{
+			throw RuntimeException((std::stringstream() << "'" << funcName << "' expected " << count << " parameters").str());
+		}
+	}
+
 	Value builtin_print(VM& vm, Value& list)
 	{
 		Value* current = &list;
@@ -46,10 +54,7 @@ namespace Orange
 
 	Value builtin_if(VM& vm, Value& args)
 	{
-		if (!(args.type == ValueType::List && args.cons->getLength() == 3))
-		{
-			throw RuntimeException(std::string("'if' expected 3 parameters"));
-		}
+		expectArgs(args, 3, "if");
 
 		Value& condition = args.cons->car;
 
@@ -65,10 +70,7 @@ namespace Orange
 
 	Value builtin_quote(VM&, Value& args)
 	{
-		if (!(args.type == ValueType::List && args.cons->getLength() == 1))
-		{
-			throw RuntimeException(std::string("'quote' expected 1 parameter"));
-		}
+		expectArgs(args, 1, "quote");
 
 		return args.cons->car;
 	}
