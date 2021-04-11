@@ -103,6 +103,41 @@ namespace Orange
 		return theList.cons->cdr;
 	}
 
+	Value builtin_list(VM& vm, Value& args)
+	{
+		Value* current_arg = &args;
+
+		Value result_first = Value(ValueType::List);
+		ConsCell* result_last = nullptr;
+
+		while (current_arg != nullptr && current_arg->type == ValueType::List)
+		{
+			Value& val = vm.evaluate(current_arg->cons->car);
+
+			ConsCell* newList = new ConsCell(val, Value());
+
+			if (result_last == nullptr)
+			{
+				result_first.cons = newList;
+			}
+			else
+			{
+				result_last->cdr = Value(ValueType::List, newList);
+			}
+
+			result_last = newList;
+
+			current_arg = &current_arg->cons->cdr;
+		}
+
+		if (result_last == nullptr)
+		{
+			result_first.cons = new ConsCell();
+		}
+
+		return result_first;
+	}
+
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
 		std::make_pair(std::string("+"), math_add),
 		std::make_pair(std::string("-"), math_sub),
@@ -113,5 +148,6 @@ namespace Orange
 		std::make_pair(std::string("quote"), builtin_quote),
 		std::make_pair(std::string("car"), builtin_car),
 		std::make_pair(std::string("cdr"), builtin_cdr),
+		std::make_pair(std::string("list"), builtin_list),
 	};
 }
