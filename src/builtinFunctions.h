@@ -75,6 +75,34 @@ namespace Orange
 		return args.cons->car;
 	}
 
+	Value builtin_car(VM& vm, Value& args)
+	{
+		expectArgs(args, 1, "car");
+
+		Value& theList = vm.evaluate(args.cons->car);
+
+		if (theList.type != ValueType::List)
+		{
+			throw RuntimeException(std::string("'car' expected list parameter"));
+		}
+
+		return theList.cons->car;
+	}
+
+	Value builtin_cdr(VM& vm, Value& args)
+	{
+		expectArgs(args, 1, "cdr");
+
+		Value& theList = vm.evaluate(args.cons->car);
+
+		if (theList.type != ValueType::List)
+		{
+			throw RuntimeException(std::string("'cdr' expected list parameter"));
+		}
+
+		return theList.cons->cdr;
+	}
+
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
 		std::make_pair(std::string("+"), math_add),
 		std::make_pair(std::string("-"), math_sub),
@@ -83,5 +111,7 @@ namespace Orange
 		std::make_pair(std::string("print"), builtin_print),
 		std::make_pair(std::string("if"), builtin_if),
 		std::make_pair(std::string("quote"), builtin_quote),
+		std::make_pair(std::string("car"), builtin_car),
+		std::make_pair(std::string("cdr"), builtin_cdr),
 	};
 }
