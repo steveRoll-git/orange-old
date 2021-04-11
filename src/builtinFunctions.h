@@ -138,6 +138,13 @@ namespace Orange
 		return result_first;
 	}
 
+	Value builtin_eval(VM& vm, Value& args)
+	{
+		expectArgs(args, 1, "eval");
+
+		return vm.evaluate(vm.evaluate(args.cons->car));
+	}
+
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
 		std::make_pair(std::string("+"), math_add),
 		std::make_pair(std::string("-"), math_sub),
@@ -149,5 +156,6 @@ namespace Orange
 		std::make_pair(std::string("car"), builtin_car),
 		std::make_pair(std::string("cdr"), builtin_cdr),
 		std::make_pair(std::string("list"), builtin_list),
+		std::make_pair(std::string("eval"), builtin_eval),
 	};
 }
