@@ -138,6 +138,13 @@ namespace Orange
 		return result_first;
 	}
 
+	Value builtin_cons(VM& vm, Value& args)
+	{
+		expectArgs(args, 2, "cons");
+
+		return Value(ValueType::List, new ConsCell(vm.evaluate(args.cons->car), vm.evaluate(args.cons->cdr.cons->car)));
+	}
+
 	Value builtin_eval(VM& vm, Value& args)
 	{
 		expectArgs(args, 1, "eval");
@@ -156,6 +163,7 @@ namespace Orange
 		std::make_pair(std::string("car"), builtin_car),
 		std::make_pair(std::string("cdr"), builtin_cdr),
 		std::make_pair(std::string("list"), builtin_list),
+		std::make_pair(std::string("cons"), builtin_cons),
 		std::make_pair(std::string("eval"), builtin_eval),
 	};
 }
