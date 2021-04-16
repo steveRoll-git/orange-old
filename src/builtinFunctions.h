@@ -2,6 +2,7 @@
 
 #include "VM.h"
 #include "RuntimeException.h"
+#include "ConsCell.h"
 
 #include <iostream>
 #include <sstream>

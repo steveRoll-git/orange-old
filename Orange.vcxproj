@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ConsCell.cpp" />
     <ClCompile Include="src\lang\Lexer.cpp" />
     <ClCompile Include="src\lang\Token.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -111,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="src\builtinFunctions.h" />
     <ClInclude Include="src\builtinMathFunc.h" />
+    <ClInclude Include="src\ConsCell.h" />
     <ClInclude Include="src\lang\Lexer.h" />
     <ClInclude Include="src\lang\SyntaxErrorException.h" />
     <ClInclude Include="src\lang\Token.h" />

@@ -1,4 +1,5 @@
 #include "Value.h"
+#include "ConsCell.h"
 
 #include <sstream>
 
@@ -85,24 +86,4 @@ std::string Value::toString(bool hideListParens)
 		result.push_back('>');
 		return result;
 	}
-}
-
-std::string ConsCell::toString()
-{
-	std::string result;
-
-	result.append(car.toString());
-
-	if (cdr.type != ValueType::Nil)
-	{
-		result.push_back(' ');
-		bool isDottedList = cdr.type != ValueType::List;
-		if (isDottedList)
-		{
-			result.append(". ");
-		}
-		result.append(cdr.toString(!isDottedList));
-	}
-
-	return result;
 }

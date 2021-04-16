@@ -124,26 +124,6 @@ namespace Orange
 		const char* getTypeName();
 		std::string toString(bool hideListParens = false);
 	};
-
-	struct ConsCell
-	{
-		Value car;
-		Value cdr;
-
-		ConsCell() {}
-		ConsCell(Value& car, Value& cdr) : car(car), cdr(cdr) {}
-
-		std::string toString();
-		bool isEmpty()
-		{
-			return car.type == ValueType::Nil && cdr.type == ValueType::Nil;
-		}
-
-		int getLength()
-		{
-			return 1 + (cdr.type == ValueType::List ? cdr.cons->getLength() : 0);
-		}
-	};
 }
 
 #endif // VALUE_H

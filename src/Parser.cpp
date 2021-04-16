@@ -1,6 +1,7 @@
 #include "Parser.h"
 
 #include "Lang/SyntaxErrorException.h"
+#include "ConsCell.h"
 
 using namespace Orange;
 
