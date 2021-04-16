@@ -62,7 +62,7 @@ namespace Orange
 		Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
 		Value(ValueType _type, InternalFunction _func) : type(_type), internalFunc(_func) {};
 
-		void copyOther(Value& other)
+		void copyOther(const Value& other)
 		{
 			type = other.type;
 			if ((other.type == ValueType::Symbol || other.type == ValueType::String) && other.valueSet)
@@ -87,16 +87,16 @@ namespace Orange
 			}
 		}
 
-		Value(Value& other)
+		Value(const Value& other)
 		{
 			copyOther(other);
 		}
-		void operator =(Value& other)
+		void operator =(const Value& other)
 		{
 			copyOther(other);
 		}
 
-		void setValue(std::string& _string)
+		void setValue(const std::string& _string)
 		{
 			new(&string) std::string;
 			string = _string;
