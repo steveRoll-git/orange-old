@@ -8,7 +8,7 @@ VM::VM()
 {
 	for (auto& func : builtinFunctions)
 	{
-		bindings[func.first] = Value(ValueType::InternalFunction, func.second);
+		pushBinding(func.first, Value(ValueType::InternalFunction, func.second));
 	}
 }
 
@@ -22,14 +22,7 @@ Value VM::evaluate(Value& v)
 	else if (v.type == ValueType::Symbol)
 	{
 		//symbol lookup
-		if (bindings.count(v.string))
-		{
-			return bindings.at(v.string);
-		}
-		else
-		{
-			return Value();
-		}
+		return getBinding(v.string);
 	}
 	else if (v.type == ValueType::List)
 	{
@@ -46,4 +39,35 @@ Value VM::evaluate(Value& v)
 			return func.internalFunc(*this, v.cons->cdr);
 		}
 	}
+}
+
+void Orange::VM::pushBinding(std::string& name, Value& value)
+{
+	if (!bindings.count(name))
+	{
+		bindings[name] = std::vector<Value>();
+	}
+
+	bindings[name].push_back(value);
+}
+
+void Orange::VM::popBinding(std::string& name)
+{
+	if (bindings.count(name))
+	{
+		bindings[name].pop_back();
+	}
+}
+
+Value Orange::VM::getBinding(std::string& name)
+{
+	if (bindings.count(name))
+	{
+		std::vector<Value>& vec = bindings.at(name);
+		if (vec.size() > 0)
+		{
+			return vec[vec.size() - 1];
+		}
+	}
+	return Value();
 }

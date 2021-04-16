@@ -14,8 +14,12 @@ namespace Orange
 
 		Value evaluate(Value& v);
 
+		void pushBinding(std::string& name, Value& value);
+		void popBinding(std::string& name);
+		Value getBinding(std::string& name);
+
 	private:
-		std::unordered_map<std::string, Value> bindings;
+		std::unordered_map<std::string, std::vector<Value>> bindings;
 	};
 }
 
