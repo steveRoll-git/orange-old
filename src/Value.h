@@ -42,84 +42,25 @@ namespace Orange
 
 		bool valueSet = false;
 
-		Value() : type(ValueType::Nil) {};
-		Value(ValueType _type) : type(_type)
-		{
-			if (type == ValueType::Symbol || type == ValueType::String)
-			{
-				new(&string) std::string;
-			}
-		}
-		Value(ValueType _type, NumberType _number) : type(_type)
-		{
-			setValue(_number);
-		}
-		Value(ValueType _type, std::string& _string) : type(_type)
-		{
-			setValue(_string);
-		}
-		Value(ValueType _type, bool _boolean) : type(_type), boolean(_boolean) {};
-		Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
-		Value(ValueType _type, InternalFunction _func) : type(_type), internalFunc(_func) {};
+		Value();
+		Value(ValueType _type);
+		Value(ValueType _type, NumberType _number);
+		Value(ValueType _type, std::string& _string);
+		Value(ValueType _type, bool _boolean);
+		Value(ValueType _type, ConsCell* _cons);
+		Value(ValueType _type, InternalFunction _func);
+		Value(const Value& other);
 
-		void copyOther(const Value& other)
-		{
-			type = other.type;
-			if ((other.type == ValueType::Symbol || other.type == ValueType::String) && other.valueSet)
-			{
-				setValue(other.string);
-			}
-			else if (other.type == ValueType::Number)
-			{
-				number = other.number;
-			}
-			else if (other.type == ValueType::Boolean)
-			{
-				boolean = other.boolean;
-			}
-			else if (other.type == ValueType::List)
-			{
-				cons = other.cons;
-			}
-			else if (other.type == ValueType::InternalFunction)
-			{
-				internalFunc = other.internalFunc;
-			}
-		}
+		void operator =(const Value& other);
 
-		Value(const Value& other)
-		{
-			copyOther(other);
-		}
-		void operator =(const Value& other)
-		{
-			copyOther(other);
-		}
+		void copyOther(const Value& other);
 
-		void setValue(const std::string& _string)
-		{
-			new(&string) std::string;
-			string = _string;
-			valueSet = true;
-		}
-		void setValue(double _number)
-		{
-			number = _number;
-			valueSet = true;
-		}
+		void setValue(const std::string& _string);
+		void setValue(double _number);
 
-		bool isTruthy()
-		{
-			return !(type == ValueType::Nil || (type == ValueType::Boolean && boolean == false));
-		}
+		bool isTruthy();
 
-		~Value()
-		{
-			if ((type == ValueType::Symbol || type == ValueType::String) && valueSet)
-			{
-				string.~string();
-			}
-		}
+		~Value();
 
 		const char* getTypeName();
 		std::string toString(bool hideListParens = false);

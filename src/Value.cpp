@@ -12,6 +12,85 @@ std::string to_hex_string(std::size_t i)
 	return s.str();
 }
 
+Value::Value() : type(ValueType::Nil) {};
+Value::Value(ValueType _type) : type(_type)
+{
+	if (type == ValueType::Symbol || type == ValueType::String)
+	{
+		new(&string) std::string;
+	}
+}
+Value::Value(ValueType _type, NumberType _number) : type(_type)
+{
+	setValue(_number);
+}
+Value::Value(ValueType _type, std::string& _string) : type(_type)
+{
+	setValue(_string);
+}
+Value::Value(ValueType _type, bool _boolean) : type(_type), boolean(_boolean) {};
+Value::Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
+Value::Value(ValueType _type, InternalFunction _func) : type(_type), internalFunc(_func) {};
+
+Value::Value(const Value& other)
+{
+	copyOther(other);
+}
+void Value::operator =(const Value& other)
+{
+	copyOther(other);
+}
+
+void Value::setValue(const std::string& _string)
+{
+	new(&string) std::string;
+	string = _string;
+	valueSet = true;
+}
+void Value::setValue(double _number)
+{
+	number = _number;
+	valueSet = true;
+}
+
+bool Value::isTruthy()
+{
+	return !(type == ValueType::Nil || (type == ValueType::Boolean && boolean == false));
+}
+
+Value::~Value()
+{
+	if ((type == ValueType::Symbol || type == ValueType::String) && valueSet)
+	{
+		string.~string();
+	}
+}
+
+void Value::copyOther(const Value& other)
+{
+	type = other.type;
+	if ((other.type == ValueType::Symbol || other.type == ValueType::String) && other.valueSet)
+	{
+		setValue(other.string);
+	}
+	else if (other.type == ValueType::Number)
+	{
+		number = other.number;
+	}
+	else if (other.type == ValueType::Boolean)
+	{
+		boolean = other.boolean;
+	}
+	else if (other.type == ValueType::List)
+	{
+		cons = other.cons;
+	}
+	else if (other.type == ValueType::InternalFunction)
+	{
+		internalFunc = other.internalFunc;
+	}
+}
+
 const char* Value::getTypeName()
 {
 	switch (type)
