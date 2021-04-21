@@ -2,6 +2,7 @@
 
 #include "Value.h"
 #include <unordered_map>
+#include <vector>
 
 using namespace Orange;
 
@@ -12,11 +13,11 @@ namespace Orange
 	public:
 		VM();
 
-		Value evaluate(Value& v);
+		Value evaluate(const Value& v);
 
-		void pushBinding(std::string& name, Value& value);
-		void popBinding(std::string& name);
-		Value getBinding(std::string& name);
+		void pushBinding(const std::string& name, const Value& value);
+		void popBinding(const std::string& name);
+		Value getBinding(const std::string& name);
 
 	private:
 		std::unordered_map<std::string, std::vector<Value>> bindings;

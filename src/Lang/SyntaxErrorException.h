@@ -13,7 +13,7 @@ namespace Orange::Lang
         int line;
         std::string message;
     public:
-        SyntaxErrorException(std::string& _sourceName, int _line, std::string& _message) : 
+        SyntaxErrorException(const std::string& _sourceName, int _line, const std::string& _message) : 
         sourceName(_sourceName),
         line(_line),
         message(_message)

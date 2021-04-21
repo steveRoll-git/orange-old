@@ -17,14 +17,14 @@ Value::Value(ValueType _type) : type(_type)
 {
 	if (type == ValueType::Symbol || type == ValueType::String)
 	{
-		new(&string) std::string;
+		new(&stringVal) std::string;
 	}
 }
 Value::Value(ValueType _type, NumberType _number) : type(_type)
 {
 	setValue(_number);
 }
-Value::Value(ValueType _type, std::string& _string) : type(_type)
+Value::Value(ValueType _type, const std::string& _string) : type(_type)
 {
 	setValue(_string);
 }
@@ -43,8 +43,8 @@ void Value::operator =(const Value& other)
 
 void Value::setValue(const std::string& _string)
 {
-	new(&string) std::string;
-	string = _string;
+	new(&stringVal) std::string;
+	stringVal = _string;
 	valueSet = true;
 }
 void Value::setValue(double _number)
@@ -53,7 +53,7 @@ void Value::setValue(double _number)
 	valueSet = true;
 }
 
-bool Value::isTruthy()
+bool Value::isTruthy() const
 {
 	return !(type == ValueType::Nil || (type == ValueType::Boolean && boolean == false));
 }
@@ -62,7 +62,7 @@ Value::~Value()
 {
 	if ((type == ValueType::Symbol || type == ValueType::String) && valueSet)
 	{
-		string.~string();
+		stringVal.std::string::~string();
 	}
 }
 
@@ -71,7 +71,7 @@ void Value::copyOther(const Value& other)
 	type = other.type;
 	if ((other.type == ValueType::Symbol || other.type == ValueType::String) && other.valueSet)
 	{
-		setValue(other.string);
+		setValue(other.stringVal);
 	}
 	else if (other.type == ValueType::Number)
 	{
@@ -91,7 +91,7 @@ void Value::copyOther(const Value& other)
 	}
 }
 
-const char* Value::getTypeName()
+const char* Value::getTypeName() const
 {
 	switch (type)
 	{
@@ -116,11 +116,11 @@ const char* Value::getTypeName()
 	}
 }
 
-std::string Value::toString(bool hideListParens)
+std::string Value::toString(bool hideListParens) const
 {
 	if (type == ValueType::String || type == ValueType::Symbol)
 	{
-		return string;
+		return stringVal;
 	}
 	else if (type == ValueType::Number)
 	{

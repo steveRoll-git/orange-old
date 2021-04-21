@@ -11,7 +11,7 @@ namespace Orange
 	class Parser : Lexer
 	{
 	public:
-		Parser(std::istream& _codeStream, std::string& _sourceName);
+		Parser(std::istream& _codeStream, const std::string& _sourceName);
 
 		Value parseValue();
 		ConsCell* parseList();

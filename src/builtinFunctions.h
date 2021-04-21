@@ -29,7 +29,9 @@ namespace Orange
 	{
 		if (!(args.type == ValueType::List && args.cons->getLength() == count))
 		{
-			throw RuntimeException((std::stringstream() << "'" << funcName << "' expected " << count << " parameters").str());
+            std::stringstream ss;
+            ss << "'" << funcName << "' expected " << count << " parameters";
+			throw RuntimeException(ss.str());
 		}
 	}
 
@@ -41,7 +43,7 @@ namespace Orange
 
 		while (current != nullptr && current->type == ValueType::List)
 		{
-			Value& val = vm.evaluate(current->cons->car);
+			const Value& val = vm.evaluate(current->cons->car);
 
 			output << val.toString();
 
@@ -57,7 +59,7 @@ namespace Orange
 	{
 		expectArgs(args, 3, "if");
 
-		Value& condition = args.cons->car;
+		const Value& condition = args.cons->car;
 
 		if (vm.evaluate(condition).isTruthy())
 		{
@@ -80,7 +82,7 @@ namespace Orange
 	{
 		expectArgs(args, 1, "car");
 
-		Value& theList = vm.evaluate(args.cons->car);
+		const Value& theList = vm.evaluate(args.cons->car);
 
 		if (theList.type != ValueType::List)
 		{
@@ -94,7 +96,7 @@ namespace Orange
 	{
 		expectArgs(args, 1, "cdr");
 
-		Value& theList = vm.evaluate(args.cons->car);
+		const Value& theList = vm.evaluate(args.cons->car);
 
 		if (theList.type != ValueType::List)
 		{
@@ -113,7 +115,7 @@ namespace Orange
 
 		while (current_arg != nullptr && current_arg->type == ValueType::List)
 		{
-			Value& val = vm.evaluate(current_arg->cons->car);
+			const Value& val = vm.evaluate(current_arg->cons->car);
 
 			ConsCell* newList = new ConsCell(val, Value());
 

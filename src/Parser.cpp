@@ -5,7 +5,7 @@
 
 using namespace Orange;
 
-Parser::Parser(std::istream& _codeStream, std::string& _sourceName) : Lexer(_codeStream, _sourceName)
+Parser::Parser(std::istream& _codeStream, const std::string& _sourceName) : Lexer(_codeStream, _sourceName)
 {
 	nextToken();
 }

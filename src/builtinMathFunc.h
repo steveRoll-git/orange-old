@@ -15,7 +15,7 @@ Value MATH_FUNCNAME(VM& vm, Value& list)
 
 	while (current != nullptr && current->type == ValueType::List)
 	{
-		Value& num = vm.evaluate(current->cons->car);
+		const Value& num = vm.evaluate(current->cons->car);
 
 		if (num.type != ValueType::Number)
 		{

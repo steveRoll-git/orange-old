@@ -10,7 +10,7 @@ namespace Orange
 	private:
 		std::string message;
 	public:
-		RuntimeException(std::string& _message) : message(_message) {}
+		RuntimeException(const std::string& _message) : message(_message) {}
 
 		std::string getFormattedError()
 		{

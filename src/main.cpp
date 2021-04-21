@@ -4,7 +4,7 @@ using namespace std;
 
 using namespace Orange;
 
-int main()
+int main(int argc, char *argv[])
 {
     repl();
 

@@ -10,7 +10,7 @@ namespace Orange::Lang
     class Lexer
     {
         public:
-        Lexer(std::istream& _codeStream, std::string& _sourceName);
+        Lexer(std::istream& _codeStream, const std::string& _sourceName);
         virtual ~Lexer();
         bool hasReachedEnd();
         Token nextToken();

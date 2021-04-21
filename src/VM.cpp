@@ -12,7 +12,7 @@ VM::VM()
 	}
 }
 
-Value VM::evaluate(Value& v)
+Value VM::evaluate(const Value& v)
 {
 	if (v.type == ValueType::Nil || v.type == ValueType::Number || v.type == ValueType::String || v.type == ValueType::Boolean)
 	{
@@ -22,7 +22,7 @@ Value VM::evaluate(Value& v)
 	else if (v.type == ValueType::Symbol)
 	{
 		//symbol lookup
-		return getBinding(v.string);
+		return getBinding(v.stringVal);
 	}
 	else if (v.type == ValueType::List)
 	{
@@ -41,7 +41,7 @@ Value VM::evaluate(Value& v)
 	}
 }
 
-void Orange::VM::pushBinding(std::string& name, Value& value)
+void Orange::VM::pushBinding(const std::string& name, const Value& value)
 {
 	if (!bindings.count(name))
 	{
@@ -51,7 +51,7 @@ void Orange::VM::pushBinding(std::string& name, Value& value)
 	bindings[name].push_back(value);
 }
 
-void Orange::VM::popBinding(std::string& name)
+void Orange::VM::popBinding(const std::string& name)
 {
 	if (bindings.count(name))
 	{
@@ -59,7 +59,7 @@ void Orange::VM::popBinding(std::string& name)
 	}
 }
 
-Value Orange::VM::getBinding(std::string& name)
+Value Orange::VM::getBinding(const std::string& name)
 {
 	if (bindings.count(name))
 	{

@@ -4,7 +4,7 @@
 #include "./Parser.h" //put the ./ here because visual studio confused this with some MSVC parser file
 #include "VM.h"
 #include "Lang/SyntaxErrorException.h"
-#include <RuntimeException.h>
+#include "RuntimeException.h"
 
 using namespace std;
 using namespace Orange;

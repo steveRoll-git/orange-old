@@ -34,7 +34,7 @@ namespace Orange
 		union
 		{
 			NumberType number;
-			std::string string;
+			std::string stringVal;
 			bool boolean;
 			ConsCell* cons;
 			InternalFunction internalFunc;
@@ -45,7 +45,7 @@ namespace Orange
 		Value();
 		Value(ValueType _type);
 		Value(ValueType _type, NumberType _number);
-		Value(ValueType _type, std::string& _string);
+		Value(ValueType _type, const std::string& _string);
 		Value(ValueType _type, bool _boolean);
 		Value(ValueType _type, ConsCell* _cons);
 		Value(ValueType _type, InternalFunction _func);
@@ -58,12 +58,12 @@ namespace Orange
 		void setValue(const std::string& _string);
 		void setValue(double _number);
 
-		bool isTruthy();
+		bool isTruthy() const;
 
 		~Value();
 
-		const char* getTypeName();
-		std::string toString(bool hideListParens = false);
+		const char* getTypeName() const;
+		std::string toString(bool hideListParens = false) const;
 	};
 }
 

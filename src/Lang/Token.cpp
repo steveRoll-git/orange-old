@@ -46,6 +46,6 @@ Token::~Token()
 {
     if ((type == TokenType::Identifier || type == TokenType::String) && valueSet)
     {
-        string.~string();
+        string.std::string::~string();
     }
 }

@@ -9,7 +9,7 @@ bool isIdentifierChar(char c)
     return c != '(' && c != ')' && c != '\'' && c != '"' && c != ';' && !isspace(c);
 }
 
-Lexer::Lexer(std::istream& _codeStream, std::string& _sourceName) :
+Lexer::Lexer(std::istream& _codeStream, const std::string& _sourceName) :
 codeStream(_codeStream),
 sourceName(_sourceName),
 currentLine(1),
