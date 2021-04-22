@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="repl.cpp" />
     <ClCompile Include="src\ConsCell.cpp" />
     <ClCompile Include="src\lang\Lexer.cpp" />
     <ClCompile Include="src\lang\Token.cpp" />

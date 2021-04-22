@@ -7,4 +7,4 @@ project(Orange)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(orange main.cpp ConsCell.cpp Parser.cpp Value.cpp VM.cpp Lang/Lexer.cpp Lang/Token.cpp)
+add_executable(orange main.cpp repl.cpp ConsCell.cpp Parser.cpp Value.cpp VM.cpp Lang/Lexer.cpp Lang/Token.cpp)

@@ -42,6 +42,9 @@
     <ClCompile Include="src\ConsCell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="repl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Value.h">
