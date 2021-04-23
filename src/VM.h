@@ -15,12 +15,13 @@ namespace Orange
 
 		Value evaluate(const Value& v);
 
-		void pushBinding(const std::string& name, const Value& value);
-		void popBinding(const std::string& name);
+		void pushScope();
+		void popScope();
+		void setBinding(const std::string& name, const Value& value);
 		Value getBinding(const std::string& name);
 
 	private:
-		std::unordered_map<std::string, std::vector<Value>> bindings;
+		std::vector<std::unordered_map<std::string, Value>> scopes; // a stack of scopes
 	};
 }
 

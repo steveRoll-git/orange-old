@@ -6,9 +6,10 @@
 
 VM::VM()
 {
+	pushScope();
 	for (auto& func : builtinFunctions)
 	{
-		pushBinding(func.first, Value(ValueType::InternalFunction, func.second));
+		setBinding(func.first, Value(ValueType::InternalFunction, func.second));
 	}
 }
 
@@ -41,32 +42,32 @@ Value VM::evaluate(const Value& v)
 	}
 }
 
-void Orange::VM::pushBinding(const std::string& name, const Value& value)
+void Orange::VM::pushScope()
 {
-	if (!bindings.count(name))
-	{
-		bindings[name] = std::vector<Value>();
-	}
-
-	bindings[name].push_back(value);
+	scopes.push_back(std::unordered_map<std::string, Value>());
 }
 
-void Orange::VM::popBinding(const std::string& name)
+void Orange::VM::popScope()
 {
-	if (bindings.count(name))
+	scopes.pop_back();
+}
+
+void Orange::VM::setBinding(const std::string& name, const Value& value)
+{
+	if (!scopes.empty())
 	{
-		bindings[name].pop_back();
+		scopes.back()[name] = value;
 	}
 }
 
 Value Orange::VM::getBinding(const std::string& name)
 {
-	if (bindings.count(name))
+	if (!scopes.empty())
 	{
-		std::vector<Value>& vec = bindings.at(name);
-		if (vec.size() > 0)
+		std::unordered_map<std::string, Value>& lastScope = scopes.back();
+		if (lastScope.count(name))
 		{
-			return vec[vec.size() - 1];
+			return lastScope[name];
 		}
 	}
 	return Value();
