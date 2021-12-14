@@ -173,9 +173,14 @@ namespace Orange
 
 		Value* currentVar = &args.cons->car;
 
-		while (currentVar != nullptr && currentVar->type == ValueType::List)
+		while (currentVar != nullptr && currentVar->type == ValueType::List && currentVar->cons->car.type != ValueType::Nil)
 		{
 			Value currentDef = currentVar->cons->car;
+
+			if (currentDef.type != ValueType::List || currentDef.cons->car.type != ValueType::Symbol || currentDef.cons->cdr.type != ValueType::List)
+			{
+				throw RuntimeException((std::stringstream() << "Invalid variable definition: " << currentDef.toString()).str());
+			}
 
 			Value varName = currentDef.cons->car;
 			Value varValue = currentDef.cons->cdr.cons->car;
