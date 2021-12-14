@@ -25,12 +25,22 @@ namespace Orange
 #define MATH_FUNCNAME math_div
 #include "builtinMathFunc.h"
 
-	void expectArgs(Value& args, int count, const char* funcName)
+	void expectArgsExactly(Value& args, int count, const char* funcName)
 	{
 		if (!(args.type == ValueType::List && args.cons->getLength() == count))
 		{
             std::stringstream ss;
             ss << "'" << funcName << "' expected " << count << " parameters";
+			throw RuntimeException(ss.str());
+		}
+	}
+
+	void expectArgsAtLeast(Value& args, int count, const char* funcName)
+	{
+		if (!(args.type == ValueType::List && args.cons->getLength() >= count))
+		{
+			std::stringstream ss;
+			ss << "'" << funcName << "' expected at least " << count << " parameters";
 			throw RuntimeException(ss.str());
 		}
 	}
@@ -57,7 +67,7 @@ namespace Orange
 
 	Value builtin_if(VM& vm, Value& args)
 	{
-		expectArgs(args, 3, "if");
+		expectArgsExactly(args, 3, "if");
 
 		const Value& condition = args.cons->car;
 
@@ -73,14 +83,14 @@ namespace Orange
 
 	Value builtin_quote(VM&, Value& args)
 	{
-		expectArgs(args, 1, "quote");
+		expectArgsExactly(args, 1, "quote");
 
 		return args.cons->car;
 	}
 
 	Value builtin_car(VM& vm, Value& args)
 	{
-		expectArgs(args, 1, "car");
+		expectArgsExactly(args, 1, "car");
 
 		const Value& theList = vm.evaluate(args.cons->car);
 
@@ -94,7 +104,7 @@ namespace Orange
 
 	Value builtin_cdr(VM& vm, Value& args)
 	{
-		expectArgs(args, 1, "cdr");
+		expectArgsExactly(args, 1, "cdr");
 
 		const Value& theList = vm.evaluate(args.cons->car);
 
@@ -143,16 +153,52 @@ namespace Orange
 
 	Value builtin_cons(VM& vm, Value& args)
 	{
-		expectArgs(args, 2, "cons");
+		expectArgsExactly(args, 2, "cons");
 
 		return Value(ValueType::List, new ConsCell(vm.evaluate(args.cons->car), vm.evaluate(args.cons->cdr.cons->car)));
 	}
 
 	Value builtin_eval(VM& vm, Value& args)
 	{
-		expectArgs(args, 1, "eval");
+		expectArgsExactly(args, 1, "eval");
 
 		return vm.evaluate(vm.evaluate(args.cons->car));
+	}
+
+	Value builtin_let(VM& vm, Value& args)
+	{
+		expectArgsAtLeast(args, 2, "let");
+
+		vm.pushScope();
+
+		Value* currentVar = &args.cons->car;
+
+		while (currentVar != nullptr && currentVar->type == ValueType::List)
+		{
+			Value currentDef = currentVar->cons->car;
+
+			Value varName = currentDef.cons->car;
+			Value varValue = currentDef.cons->cdr.cons->car;
+
+			vm.lastScope()[varName.stringVal] = vm.evaluate(varValue);
+
+			currentVar = &currentVar->cons->cdr;
+		}
+
+		Value returnValue;
+
+		Value* currentForm = &args.cons->cdr;
+
+		while (currentForm != nullptr && currentForm->type == ValueType::List)
+		{
+			returnValue = vm.evaluate(currentForm->cons->car);
+
+			currentForm = &currentForm->cons->cdr;
+		}
+
+		vm.popScope();
+
+		return returnValue;
 	}
 
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
@@ -168,5 +214,6 @@ namespace Orange
 		std::make_pair(std::string("list"), builtin_list),
 		std::make_pair(std::string("cons"), builtin_cons),
 		std::make_pair(std::string("eval"), builtin_eval),
+		std::make_pair(std::string("let"), builtin_let),
 	};
 }

@@ -17,6 +17,7 @@ namespace Orange
 
 		void pushScope();
 		void popScope();
+		std::unordered_map<std::string, Value>& lastScope();
 		void setBinding(const std::string& name, const Value& value);
 		Value getBinding(const std::string& name);
 

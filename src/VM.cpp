@@ -52,6 +52,11 @@ void Orange::VM::popScope()
 	scopes.pop_back();
 }
 
+std::unordered_map<std::string, Value>& Orange::VM::lastScope()
+{
+	return scopes.back();
+}
+
 void Orange::VM::setBinding(const std::string& name, const Value& value)
 {
 	if (!scopes.empty())
@@ -64,10 +69,13 @@ Value Orange::VM::getBinding(const std::string& name)
 {
 	if (!scopes.empty())
 	{
-		std::unordered_map<std::string, Value>& lastScope = scopes.back();
-		if (lastScope.count(name))
+		for (int i = scopes.size() - 1; i >= 0; i--)
 		{
-			return lastScope[name];
+			std::unordered_map<std::string, Value>& scope = scopes[i];
+			if (scope.count(name))
+			{
+				return scope[name];
+			}
 		}
 	}
 	return Value();
