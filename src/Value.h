@@ -2,6 +2,7 @@
 #define VALUE_H
 
 #include <string>
+#include "Function.h"
 
 namespace Orange
 {
@@ -37,6 +38,7 @@ namespace Orange
 			std::string stringVal;
 			bool boolean;
 			ConsCell* cons;
+			Function func;
 			InternalFunction internalFunc;
 		};
 
@@ -49,6 +51,7 @@ namespace Orange
 		Value(ValueType _type, bool _boolean);
 		Value(ValueType _type, ConsCell* _cons);
 		Value(ValueType _type, InternalFunction _func);
+		Value(ValueType _type, Function _func);
 		Value(const Value& other);
 
 		void operator =(const Value& other);

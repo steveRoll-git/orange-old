@@ -31,6 +31,7 @@ Value::Value(ValueType _type, const std::string& _string) : type(_type)
 Value::Value(ValueType _type, bool _boolean) : type(_type), boolean(_boolean) {};
 Value::Value(ValueType _type, ConsCell* _cons) : type(_type), cons(_cons) {};
 Value::Value(ValueType _type, InternalFunction _func) : type(_type), internalFunc(_func) {};
+Value::Value(ValueType _type, Function _func) : type(_type), func(_func) {};
 
 Value::Value(const Value& other)
 {
@@ -64,6 +65,10 @@ Value::~Value()
 	{
 		stringVal.std::string::~string();
 	}
+	else if (type == ValueType::Function)
+	{
+		func.~Function();
+	}
 }
 
 void Value::copyOther(const Value& other)
@@ -84,6 +89,11 @@ void Value::copyOther(const Value& other)
 	else if (other.type == ValueType::List)
 	{
 		cons = other.cons;
+	}
+	else if (other.type == ValueType::Function)
+	{
+		new(&func.argumentNames) vector<string>;
+		func = other.func;
 	}
 	else if (other.type == ValueType::InternalFunction)
 	{

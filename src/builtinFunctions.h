@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sstream>
 
+using ss = std::stringstream;
+
 namespace Orange
 {
 #define MATH_OPERATOR +
@@ -179,7 +181,7 @@ namespace Orange
 
 			if (currentDef.type != ValueType::List || currentDef.cons->car.type != ValueType::Symbol || currentDef.cons->cdr.type != ValueType::List)
 			{
-				throw RuntimeException((std::stringstream() << "Invalid variable definition: " << currentDef.toString()).str());
+				throw RuntimeException((ss() << "Invalid variable definition: " << currentDef.toString()).str());
 			}
 
 			Value varName = currentDef.cons->car;
@@ -206,6 +208,44 @@ namespace Orange
 		return returnValue;
 	}
 
+	Value builtin_defun(VM& vm, Value& args)
+	{
+		expectArgsAtLeast(args, 3, "defun");
+
+		if (args.cons->car.type != ValueType::Symbol)
+		{
+			throw RuntimeException((ss() << "Function name must be a symbol (was a " << args.cons->car.getTypeName() << " " << args.cons->car.toString() << ")").str());
+		}
+		string name = args.cons->car.stringVal;
+
+		vector<string> argNames;
+
+		Value* currentArg = &args.cons->cdr.cons->car;
+		if (currentArg->type != ValueType::List)
+		{
+			throw RuntimeException((ss() << "Function arguments list must be a list (was a " << currentArg->getTypeName() << " " << currentArg->toString() << ")").str());
+		}
+
+		while (currentArg != nullptr && currentArg->type == ValueType::List && currentArg->cons->car.type != ValueType::Nil)
+		{
+			Value theArg = currentArg->cons->car;
+			if (theArg.type != ValueType::Symbol)
+			{
+				throw RuntimeException((ss() << "Function argument must be a symbol (was a " << theArg.getTypeName() << " " << theArg.toString() << ")").str());
+			}
+			argNames.push_back(theArg.stringVal);
+			currentArg = &currentArg->cons->cdr;
+		}
+
+		Function theFunc = Function(argNames, args.cons->cdr.cons->cdr.cons);
+
+		Function bleh = theFunc;
+
+		vm.lastScope()[name] = Value(ValueType::Function, theFunc);
+
+		return Value();
+	}
+
 	std::pair<std::string, InternalFunction> builtinFunctions[] = {
 		std::make_pair(std::string("+"), math_add),
 		std::make_pair(std::string("-"), math_sub),
@@ -220,5 +260,6 @@ namespace Orange
 		std::make_pair(std::string("cons"), builtin_cons),
 		std::make_pair(std::string("eval"), builtin_eval),
 		std::make_pair(std::string("let"), builtin_let),
+		std::make_pair(std::string("defun"), builtin_defun),
 	};
 }

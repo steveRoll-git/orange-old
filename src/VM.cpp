@@ -39,6 +39,38 @@ Value VM::evaluate(const Value& v)
 		{
 			return func.internalFunc(*this, v.cons->cdr);
 		}
+		else
+		{
+			pushScope();
+
+			Value* currentArg = &v.cons->cdr;
+
+			for (int i = 0; i < func.func.argumentNames.size() && currentArg != nullptr && currentArg->type == ValueType::List; i++)
+			{
+				lastScope()[func.func.argumentNames[i]] = evaluate(currentArg->cons->car);
+
+				currentArg = &currentArg->cons->cdr;
+			}
+
+			ConsCell* currentStatement = func.func.body;
+			Value returnValue;
+
+			while (currentStatement != nullptr)
+			{
+				returnValue = evaluate(currentStatement->car);
+
+				if (currentStatement->cdr.type != ValueType::List)
+				{
+					break;
+				}
+
+				currentStatement = currentStatement->cdr.cons;
+			}
+
+			popScope();
+
+			return returnValue;
+		}
 	}
 }
 
