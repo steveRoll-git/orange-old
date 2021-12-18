@@ -47,6 +47,68 @@ namespace Orange
 		}
 	}
 
+#define COMP_OPERATOR <
+#define COMP_FUNCNAME builtin_lt
+#include "builtinCompFunc.h"
+
+#define COMP_OPERATOR >
+#define COMP_FUNCNAME builtin_gt
+#include "builtinCompFunc.h"
+
+#define COMP_OPERATOR <=
+#define COMP_FUNCNAME builtin_le
+#include "builtinCompFunc.h"
+
+#define COMP_OPERATOR >=
+#define COMP_FUNCNAME builtin_ge
+#include "builtinCompFunc.h"
+
+	Value builtin_eq(VM& vm, Value& args)
+	{
+		expectArgsExactly(args, 2, "=");
+
+		Value a = vm.evaluate(args.cons->car);
+
+		Value b = vm.evaluate(args.cons->cdr.cons->car);
+
+		if (a.type == b.type)
+		{
+			if (a.type == ValueType::Number)
+			{
+				return Value(ValueType::Boolean, a.number == b.number);
+			}
+			else if (a.type == ValueType::String)
+			{
+				return Value(ValueType::Boolean, a.stringVal == b.stringVal);
+			}
+		}
+
+		throw RuntimeException((ss() << "Cannot compare values of types " << a.getTypeName() << " and " << b.getTypeName()).str());
+	}
+
+	Value builtin_ne(VM& vm, Value& args)
+	{
+		expectArgsExactly(args, 2, "/=");
+
+		Value a = vm.evaluate(args.cons->car);
+
+		Value b = vm.evaluate(args.cons->cdr.cons->car);
+
+		if (a.type == b.type)
+		{
+			if (a.type == ValueType::Number)
+			{
+				return Value(ValueType::Boolean, a.number != b.number);
+			}
+			else if (a.type == ValueType::String)
+			{
+				return Value(ValueType::Boolean, a.stringVal != b.stringVal);
+			}
+		}
+
+		throw RuntimeException((ss() << "Cannot compare values of types " << a.getTypeName() << " and " << b.getTypeName()).str());
+	}
+
 	Value builtin_print(VM& vm, Value& list)
 	{
 		Value* current = &list;
@@ -251,6 +313,12 @@ namespace Orange
 		std::make_pair(std::string("-"), math_sub),
 		std::make_pair(std::string("*"), math_mul),
 		std::make_pair(std::string("/"), math_div),
+		std::make_pair(std::string("<"), builtin_lt),
+		std::make_pair(std::string(">"), builtin_gt),
+		std::make_pair(std::string("<="), builtin_le),
+		std::make_pair(std::string(">="), builtin_ge),
+		std::make_pair(std::string("="), builtin_eq),
+		std::make_pair(std::string("/="), builtin_ne),
 		std::make_pair(std::string("print"), builtin_print),
 		std::make_pair(std::string("if"), builtin_if),
 		std::make_pair(std::string("quote"), builtin_quote),
